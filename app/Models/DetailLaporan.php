@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class DetailLaporan extends Model
+{
+    protected $table = 'detail_laporan';
+    protected $guarded = [];
+
+    public function laporanGizi() {
+        return $this->belongsTo(LaporanGizi::class, 'id_detail_laporan');
+    }
+}
