@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\OrangTua;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -96,6 +98,22 @@ class OrangTuaSeeder extends Seeder
             ],
         ];
 
-        DB::table('orang_tua')->insert($data);
+        foreach($data as $item) { 
+            $user = User::create([
+                'name' => $item['nama_orang_tua'],
+                'email' => $item['nik'] . '@gmail.com',
+                'password' => bcrypt('password123'),
+                'role' => 'orangtua',
+            ]);
+
+            OrangTua::create([
+                'nik' => $item['nik'],
+                'tanggal_lahir' => $item['tanggal_lahir'],
+                'telepon' => $item['telepon'],
+                'id_user' => $user->id,
+            ]);
+        }
+
+        // DB::table('orang_tua')->insert($data);
     }
 }
