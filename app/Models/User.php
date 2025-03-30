@@ -61,4 +61,8 @@ class User extends Authenticatable implements FilamentUser
         };
 
     }
+
+    public function orangTua() {
+        return $this->hasOne(OrangTua::class, 'id_user');
+    }
 }
