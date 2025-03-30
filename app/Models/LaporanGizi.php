@@ -14,7 +14,4 @@ class LaporanGizi extends Model
         return $this->belongsTo(Balita::class, 'id_balita');
     }
 
-    public function detailLaporan() { 
-        return $this->hasOne(DetailLaporan::class, 'id_detail_laporan');
-    }
 }

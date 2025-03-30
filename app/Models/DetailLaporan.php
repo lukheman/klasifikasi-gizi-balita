@@ -10,6 +10,6 @@ class DetailLaporan extends Model
     protected $guarded = [];
 
     public function laporanGizi() {
-        return $this->belongsTo(LaporanGizi::class, 'id_detail_laporan');
+        return $this->hasOne(LaporanGizi::class, 'id_detail_laporan');
     }
 }
