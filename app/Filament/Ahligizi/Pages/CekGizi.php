@@ -3,18 +3,19 @@
 namespace App\Filament\Ahligizi\Pages;
 
 use App\Models\Balita;
+use App\Models\LaporanGizi;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 
 use Filament\Actions\Action;
 
 use App\Filament\Helpers\CekGiziHelper;
-use App\Filament\Widgets\GrafikKMS;
-use App\Filament\Widgets\SalesChart;
+use App\Livewire\GrafikKMS;
 
 use Carbon\Carbon;
 
@@ -35,13 +36,13 @@ class CekGizi extends Page
     public ?float $berat = null;
 
 
-    public function mount(): void { 
+    public function mount(): void {
         $this->form->fill();
     }
 
-    public function form(Form $form): Form { 
+    public function form(Form $form): Form {
         return $form
-            ->schema([ 
+            ->schema([
                 Select::make('kode_balita')
                     ->label('Nama Balita')
                     ->searchable()
@@ -67,48 +68,59 @@ class CekGizi extends Page
                 TextInput::make('umur')
                     ->required()
                     ->label('Umur (Bulan)')
-                    ->default(46)
                     ->readonly()
                     ->integer(),
                 TextInput::make('berat')
                     ->required()
-                    ->default(12.5)
                     ->label('Berat (Kg)')
                     ->numeric(),
                 TextInput::make('tinggi')
                     ->required()
-                    ->default(91)
                     ->label('Tinggi (cm)')
                     ->numeric()
             ])
             ->statePath('data');
     }
 
-    public function create(): void { 
+    public function create(): void {
         $data = $this->form->getState();
 
         $this->status = CekGiziHelper::cekStatusGizi($data['umur'], $data['berat'], $data['tinggi']);
         $this->umur = $data['umur'];
         $this->berat = $data['berat'];
 
+        // simpan ke laporan
+        LaporanGizi::create([
+            'id_balita' => $data['id_balita'],
+            'tanggal_pemeriksaan' => $data['tanggal_pemeriksaan'],
+            'umur' => $data['umur'],
+            'berat' => $data['berat'],
+            'tinggi' => $data['tinggi'],
+            'status_gizi' => $this->status
+        ]);
 
-       // Memicu render ulang agar widget muncul
+
+        Notification::make()
+            ->title('Menyimpan laporan gizi balita')
+            ->success()
+            ->seconds(5)
+            ->send();
+
+        // Memicu render ulang agar widget muncul
         $this->dispatch('refresh');
+
     }
 
-    protected  function getFooterWidgets(): array { 
+    protected  function getFooterWidgets(): array {
 
-        return $this->status !== null ? [  
+        return $this->status !== null ? [
             GrafikKMS::make([
-                'status' => $this->status, 
-                'umurBayi' => $this->umur, 
+                'status' => $this->status,
+                'umurBayi' => $this->umur,
                 'berat' => $this->berat
-            ])  
+            ])
         ] : [];
 
-        // return [ 
-        //     GrafikKMS::class
-        // ];
     }
 
     /* protected function getHeaderActions(): array */
