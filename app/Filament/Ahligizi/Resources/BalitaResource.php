@@ -70,9 +70,14 @@ class BalitaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('kode_balita'),
-                TextColumn::make('nama_balita'),
-                TextColumn::make('tanggal_lahir'),
+                TextColumn::make('kode_balita')
+                    ->searchable()
+                    ->label('Kode Balita'),
+                TextColumn::make('nama_balita')
+                    ->searchable()
+                    ->label('Nama Balita'),
+                TextColumn::make('tanggal_lahir')
+                    ->label('Tanggal Lahir'),
             ])
             ->filters([
                 //
