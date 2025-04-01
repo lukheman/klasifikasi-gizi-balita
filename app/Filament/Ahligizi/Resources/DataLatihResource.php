@@ -14,12 +14,13 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Imports\DataLatihImporter;
 
 class DataLatihResource extends Resource
 {
     protected static ?string $model = DataLatih::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
 
     protected static ?string $slug = 'data-latih';
 
@@ -61,6 +62,10 @@ class DataLatihResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([ 
+                Tables\Actions\ImportAction::make()
+                    ->importer(DataLatihImporter::class)
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
