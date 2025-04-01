@@ -2,8 +2,8 @@
 
 namespace App\Filament\Ahligizi\Pages;
 
+use App\Livewire\GrafikKMS\GrafikTinggiBadan;
 use App\Models\Balita;
-use App\Models\LaporanGizi;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -15,7 +15,9 @@ use Filament\Pages\Page;
 use Filament\Actions\Action;
 
 use App\Filament\Helpers\CekGiziHelper;
-use App\Livewire\GrafikKMS;
+use App\Livewire\GrafikKMS\GrafikBeratBadan;
+
+use App\Models\LaporanGizi;
 
 use Carbon\Carbon;
 
@@ -34,6 +36,7 @@ class CekGizi extends Page
 
     public ?int $umur = null;
     public ?float $berat = null;
+    public ?float $tinggi = null;
 
 
     public function mount(): void {
@@ -43,15 +46,15 @@ class CekGizi extends Page
     public function form(Form $form): Form {
         return $form
             ->schema([
-                Select::make('kode_balita')
+                Select::make('id_balita')
                     ->label('Nama Balita')
                     ->searchable()
                     ->preload()
                     ->required()
-                    ->options(Balita::all()->mapWithKeys(fn($o) => [$o->kode_balita => "{$o->kode_balita} - {$o->nama_balita}"]))
+                    ->options(Balita::all()->mapWithKeys(fn($o) => [$o->id => "{$o->kode_balita} - {$o->nama_balita}"]))
                     ->reactive()
    ->afterStateUpdated(function ($state, callable $set) {
-                $tanggalLahir = Balita::where('kode_balita', $state)->value('tanggal_lahir');
+                $tanggalLahir = Balita::where('id', $state)->value('tanggal_lahir');
 
                 if ($tanggalLahir) {
                     $umur = ceil(Carbon::parse($tanggalLahir)->diffInMonths(Carbon::now()));
@@ -60,7 +63,7 @@ class CekGizi extends Page
                     $set('umur', null);
                 }
             }),
-                DatePicker::make('tanggal')
+                DatePicker::make('tanggal_pemeriksaan')
                     ->required()
                     ->label('Tanggal Pemeriksaan')
                     ->default(now())
@@ -88,6 +91,7 @@ class CekGizi extends Page
         $this->status = CekGiziHelper::cekStatusGizi($data['umur'], $data['berat'], $data['tinggi']);
         $this->umur = $data['umur'];
         $this->berat = $data['berat'];
+        $this->tinggi = $data['tinggi'];
 
         // simpan ke laporan
         LaporanGizi::create([
@@ -114,41 +118,18 @@ class CekGizi extends Page
     protected  function getFooterWidgets(): array {
 
         return $this->status !== null ? [
-            GrafikKMS::make([
+            GrafikBeratBadan::make([
                 'status' => $this->status,
-                'umurBayi' => $this->umur,
+                'umur' => $this->umur,
                 'berat' => $this->berat
+            ]),
+            GrafikTinggiBadan::make([
+                'umur' => $this->umur,
+                'tinggi' => $this->tinggi
             ])
         ] : [];
 
     }
 
-    /* protected function getHeaderActions(): array */
-    /* { */
-    /*     return [ */
-    /*         Action::make('Show Form') */
-    /*             ->label('Buka Form') */
-    /*             ->modalHeading('Masukkan Data') */
-    /*             ->modalButton('Kirim') */
-    /*             ->form([ */
-    /*                 TextInput::make('name') */
-    /*                     ->label('Nama') */
-    /*                     ->required(), */
-    /*                 TextInput::make('age') */
-    /*                     ->label('Umur') */
-    /*                     ->numeric() */
-    /*                     ->required(), */
-    /*             ]) */
-    /*             ->action(fn (array $data) => $this->submit($data)), // Jalankan submit(), */
-    /**/
-    /*         Action::make('Show Message') */
-    /*             ->label('Lihat Pesan') */
-    /*             ->modal() */
-    /*             ->modalHeading('Pesan Anda') */
-    /*             ->modalSubmitActionLabel('Tutup') */
-    /*             ->modalDescription(fn () => $this->message) */
-    /*             ->extraAttributes(['x-show' => '$wire.get(\'message\')']) // Tampilkan otomatis */
-    /*     ]; */
-    /* } */
 
 }
