@@ -34,34 +34,39 @@ class BalitaResource extends Resource
                 TextInput::make('nama_balita')->required(),
                 DatePicker::make('tanggal_lahir')
                     ->maxDate(now())
+                    ->after(now()->subMonths(60))
+                    ->validationMessages([
+                        'after' => 'Umur tidak boleh lebih dari 60 bulan (5 tahun)'
+                    ])
                     ->required(),
                 Select::make('id_orang_tua')
-                    // ->relationship('orang_tua', 'nama_orang_tua')
                     ->label('Orang Tua')
-                    ->options(OrangTua::all()->mapWithKeys(fn($o) => [$o->id => "{$o->nik} - {$o->nama_orang_tua}"]))
+                    ->options(OrangTua::with('user')->get()->mapWithKeys(fn($o) => [$o->id => "{$o->nik} - {$o->user->name}"]))
                     ->searchable()
                     ->preload()
-                    ->createOptionForm([
-                        TextInput::make('nik')
-                            ->label('NIK')
-                            ->numeric()
-                            ->required(),
-                        TextInput::make('nama_orang_tua')
-                            ->label('Nama Orang Tua')
-                            ->required(),
-                        DatePicker::make('tanggal_lahir')
-                            ->label('Tanggal Lahir')
-                            ->maxDate(now())
-                            ->required(),
-                        TextInput::make('telepon')
-                            ->label('Telepon')
-                            ->tel()
-                            ->required()
 
-                    ])
-                    ->createOptionUsing(function (array $data) {
-                        return OrangTua::create($data)->id;
-                    })
+                    /* ->createOptionForm([ */
+                    /*     TextInput::make('nik') */
+                    /*         ->label('NIK') */
+                    /*         ->numeric() */
+                    /*         ->required(), */
+                    /*     TextInput::make('nama_orang_tua') */
+                    /*         ->label('Nama Orang Tua') */
+                    /*         ->required(), */
+                    /*     DatePicker::make('tanggal_lahir') */
+                    /*         ->label('Tanggal Lahir') */
+                    /*         ->maxDate(now()) */
+                    /*         ->required(), */
+                    /*     TextInput::make('telepon') */
+                    /*         ->label('Telepon') */
+                    /*         ->tel() */
+                    /*         ->required() */
+                    /**/
+                    /* ]) */
+                    /* ->createOptionUsing(function (array $data) { */
+                    /*     return OrangTua::create($data)->id; */
+                    /* }) */
+
                     ->required()
             ]);
     }
