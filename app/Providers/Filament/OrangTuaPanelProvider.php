@@ -11,13 +11,14 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
+use App\Filament\OrangTua\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+
 
 class OrangTuaPanelProvider extends PanelProvider
 {
@@ -26,7 +27,9 @@ class OrangTuaPanelProvider extends PanelProvider
         return $panel
             ->id('orangtua')
             ->path('orangtua')
+            ->profile()
             ->login()
+            ->spa()
             ->registration(Register::class)
             ->colors([
                 'primary' => Color::Amber,
@@ -38,8 +41,7 @@ class OrangTuaPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/OrangTua/Widgets'), for: 'App\\Filament\\OrangTua\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                Widgets\OrangTuaDashboard::class
             ])
             ->middleware([
                 EncryptCookies::class,
