@@ -10,7 +10,7 @@ class LaporanGizi extends Model
     protected $table = 'laporan_gizi';
     protected $guarded = [];
 
-    public function balita() { 
+    public function balita() {
         return $this->belongsTo(Balita::class, 'id_balita');
     }
 
