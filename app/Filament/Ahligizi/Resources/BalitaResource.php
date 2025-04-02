@@ -6,6 +6,7 @@ use App\Filament\Ahligizi\Resources\BalitaResource\Pages;
 use App\Filament\Ahligizi\Resources\BalitaResource\RelationManagers;
 use App\Models\Balita;
 use App\Models\OrangTua;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -102,7 +103,7 @@ class BalitaResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\LaporanGiziRelationManager::class,
         ];
     }
 
@@ -112,6 +113,7 @@ class BalitaResource extends Resource
             'index' => Pages\ListBalitas::route('/'),
             'create' => Pages\CreateBalita::route('/create'),
             'edit' => Pages\EditBalita::route('/{record}/edit'),
+            'view' => Pages\ViewBalita::route('/{record}/view'),
         ];
     }
 }
