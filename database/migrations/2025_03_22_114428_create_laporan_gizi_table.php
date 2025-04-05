@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('laporan_gizi', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
-            $table->foreignId('kode_balita')->constrained('balita')->restrictOnDelete();
-            $table->foreignId('id_detail_laporan')->constrained('detail_laporan');
+            $table->date('tanggal_pemeriksaan');
+            $table->foreignId('id_balita')->constrained('balita')->cascadeOnDelete();
+            $table->float('berat');
+            $table->float('tinggi');
+            $table->integer('umur');
+            $table->enum('status_gizi',['stunting', 'underweight', 'normal', 'wasting', 'overweight']);
             $table->timestamps();
-
-            $table->index('kode_balita');
-
         });
     }
 

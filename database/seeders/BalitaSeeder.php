@@ -18,7 +18,7 @@ class BalitaSeeder extends Seeder
             [
                 'kode_balita' => Str::random(10),
                 'nama_balita' => 'John Doe',
-                'tanggal_lahir' => '2018-01-01',
+                'tanggal_lahir' => '2022-01-01',
                 'id_orang_tua' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -26,7 +26,7 @@ class BalitaSeeder extends Seeder
             [
                 'kode_balita' => Str::random(10),
                 'nama_balita' => 'Jane Doe',
-                'tanggal_lahir' => '2019-02-02',
+                'tanggal_lahir' => '2023-02-02',
                 'id_orang_tua' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),

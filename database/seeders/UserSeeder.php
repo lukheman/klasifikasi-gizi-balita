@@ -34,5 +34,12 @@ class UserSeeder extends Seeder
             'role' => 'orangtua'
         ]);
 
+        User::create([
+            'name' => 'Burhan S.Kom',
+            'email' => 'pimpinan@gmail.com',
+            'password' => bcrypt('password123'),
+            'role' => 'pimpinan'
+        ]);
+
     }
 }
