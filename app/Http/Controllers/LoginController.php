@@ -26,6 +26,7 @@ class LoginController extends Controller
             return match ($user->role) {
                 'admin' => redirect()->route('filament.admin.pages.dashboard'),
                 'ahligizi' => redirect()->route('filament.ahligizi.pages.dashboard'),
+                'orangtua' => redirect()->route('filament.orangtua.pages.dashboard'),
                 default => redirect('/home'),
             };
         }

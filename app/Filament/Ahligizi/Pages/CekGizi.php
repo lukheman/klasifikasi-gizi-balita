@@ -20,6 +20,7 @@ use App\Livewire\GrafikKMS\GrafikBeratBadan;
 use App\Models\LaporanGizi;
 
 use Carbon\Carbon;
+use Filament\Support\View\Components\Modal;
 
 class CekGizi extends Page
 {

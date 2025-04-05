@@ -9,7 +9,11 @@ class OrangTua extends Model
     protected $table = 'orang_tua';
     protected $guarded = [];
 
-    public function balita() { 
+    public function balita() {
         return $this->hasMany(Balita::class, 'id_orang_tua');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'id_user');
     }
 }
