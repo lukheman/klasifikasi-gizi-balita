@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('telepon');
             $table->timestamps();
 
-            $table->index(['nama_orang_tua', 'nik']);
+            $table->index(['nik', 'telepon']);
         });
     }
 
