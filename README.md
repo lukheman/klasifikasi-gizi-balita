@@ -33,3 +33,24 @@ Total Pembayaran: Rp. 1.640.000
 
 **Penambahan fitur tambahan selain yang tertera di atas dikenai biaya tambahan (jika fitur kompleks dan sulit, kalau
 gampang, free ji) *
+
+
+'name' => 'Sofhia',
+'email' => 'sofhia@gmail.com',
+'password' => bcrypt('password123'),
+'role' => 'ahligizi'
+
+'name' => 'Akmal',
+'email' => 'akmal@gmail.com',
+'password' => bcrypt('password123'),
+'role' => 'admin'
+
+'name' => 'Cici',
+'email' => 'cici@gmail.com',
+'password' => bcrypt('password123'),
+'role' => 'orangtua'
+
+'name' => 'Burhan S.Kom',
+'email' => 'pimpinan@gmail.com',
+'password' => bcrypt('password123'),
+'role' => 'pimpinan'
