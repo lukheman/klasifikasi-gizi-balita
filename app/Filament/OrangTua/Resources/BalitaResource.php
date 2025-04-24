@@ -15,6 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use function auth;
 
 class BalitaResource extends Resource
 {
@@ -36,10 +37,10 @@ class BalitaResource extends Resource
     public static function table(Table $table): Table
     {
 
-        $orang_tua = OrangTua::where('id_user', auth()->user()->id)->first();
+        /* $orang_tua = OrangTua::where('id_user', auth()->user()->id)->first(); */
 
         return $table
-            ->query(Balita::query()->where('id_orang_tua', $orang_tua->id))
+            ->query(Balita::query()->where('id_orang_tua', auth()->user()->id))
             ->columns([
                 TextColumn::make('nama_balita'),
                 TextColumn::make('tanggal_lahir'),
