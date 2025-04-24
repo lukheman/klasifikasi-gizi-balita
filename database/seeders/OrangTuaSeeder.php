@@ -98,7 +98,7 @@ class OrangTuaSeeder extends Seeder
             ],
         ];
 
-        foreach($data as $item) { 
+        foreach($data as $item) {
             $user = User::create([
                 'name' => $item['nama_orang_tua'],
                 'email' => $item['nik'] . '@gmail.com',
