@@ -15,15 +15,15 @@ class OrangTuaDashboard extends BaseWidget
 
         $orang_tua = OrangTua::where('id_user', auth()->user()->id)->first();
 
-        /* $balita = Balita::query()->where('id_orang_tua', $orang_tua->id)->pluck('id'); // semua anak dari orang tua */
+        $balita = Balita::query()->where('id_orang_tua', auth()->user()->id)->pluck('id'); // semua anak dari orang tua
 
         return [
-            /* Stat::make('Anak', Balita::where('id_orang_tua', $orang_tua->id)->count()) */
-            /*     ->description('Jumlah Anak Anda') */
-            /*     ->icon('heroicon-o-user-group'), */
-            /* Stat::make('Pemeriksaan', LaporanGizi::whereIn('id_balita', $balita)->count()) */
-            /*     ->description('Jumlah pemeriksaan yang telah dilakukan') */
-            /*     ->icon('heroicon-o-user-group'), */
+            Stat::make('Anak', Balita::where('id_orang_tua', $orang_tua->id)->count())
+                ->description('Jumlah Anak Anda')
+                ->icon('heroicon-o-user-group'),
+            Stat::make('Pemeriksaan', LaporanGizi::whereIn('id_balita', $balita)->count())
+                ->description('Jumlah pemeriksaan yang telah dilakukan')
+                ->icon('heroicon-o-user-group'),
         ];
     }
 }

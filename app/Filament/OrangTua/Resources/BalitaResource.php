@@ -37,10 +37,10 @@ class BalitaResource extends Resource
     public static function table(Table $table): Table
     {
 
-        /* $orang_tua = OrangTua::where('id_user', auth()->user()->id)->first(); */
+        $orang_tua = OrangTua::where('id_user', auth()->user()->id)->first();
 
         return $table
-            ->query(Balita::query()->where('id_orang_tua', auth()->user()->id))
+            ->query(Balita::query()->where('id_orang_tua', $orang_tua->id))
             ->columns([
                 TextColumn::make('nama_balita'),
                 TextColumn::make('tanggal_lahir'),
