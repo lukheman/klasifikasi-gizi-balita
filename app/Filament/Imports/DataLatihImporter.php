@@ -11,6 +11,7 @@ class DataLatihImporter extends Importer
 {
     protected static ?string $model = DataLatih::class;
 
+
     public static function getColumns(): array
     {
         return [

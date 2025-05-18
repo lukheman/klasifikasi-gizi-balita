@@ -3,7 +3,7 @@
 namespace App\Filament\Ahligizi\Resources;
 
 use App\Filament\Ahligizi\Resources\LaporanGiziResource\Pages;
-use App\Models\LaporanGizi;
+use App\Models\RiwayatPemeriksaan;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LaporanGiziResource extends Resource
 {
-    protected static ?string $model = LaporanGizi::class;
+    protected static ?string $model = RiwayatPemeriksaan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

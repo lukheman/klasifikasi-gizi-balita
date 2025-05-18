@@ -3,18 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Balita extends Model
 {
     protected $table = 'balita';
     protected $guarded = [];
 
-    public function orangTua() { 
-        return $this->belongsTo(OrangTua::class, 'id_orang_tua');
+    public function orangTua() {
+        return $this->belongsTo(User::class, 'id_orang_tua');
     }
 
-    public function laporanGizi() { 
-        return $this->hasMany(LaporanGizi::class, 'id_balita');
+    public function riwayatPemeriksaan() {
+        return $this->hasMany(RiwayatPemeriksaan::class, 'id_balita');
+    }
+
+    public function desa(): HasOne {
+        return $this->hasOne(Desa::class, 'id', 'id_desa');
     }
 
 }

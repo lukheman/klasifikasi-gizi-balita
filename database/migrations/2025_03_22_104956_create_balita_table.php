@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('balita', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_balita')->unique();
-            $table->string('nama_balita');
+            $table->string('nik')->unique();
+            $table->string('nama');
             $table->date('tanggal_lahir');
-            $table->foreignId('id_orang_tua')->constrained('orang_tua')->restrictOnDelete();
+            $table->foreignId('id_orang_tua')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('id_desa')
+                ->nullable()
+                ->constrained('desa')
+                ->nullOnDelete();
             $table->timestamps();
-
-            $table->index(['nama_balita', 'kode_balita']);
+            $table->index(['nama', 'nik']);
         });
     }
 

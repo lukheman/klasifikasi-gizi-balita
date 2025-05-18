@@ -7,7 +7,6 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -18,6 +17,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+
+use App\Filament\Pages;
 
 
 class OrangTuaPanelProvider extends PanelProvider
@@ -37,11 +38,15 @@ class OrangTuaPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/OrangTua/Resources'), for: 'App\\Filament\\OrangTua\\Resources')
             ->discoverPages(in: app_path('Filament/OrangTua/Pages'), for: 'App\\Filament\\OrangTua\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                Pages\LaporanRiwayatPemeriksaan::class
+            ])
+
+            ->resources([
+                \App\Filament\Ahligizi\Resources\RiwayatPemeriksaanResource::class
             ])
             ->discoverWidgets(in: app_path('Filament/OrangTua/Widgets'), for: 'App\\Filament\\OrangTua\\Widgets')
             ->widgets([
-                Widgets\OrangTuaDashboard::class
+                /* Widgets\OrangTuaDashboard::class */
             ])
             ->middleware([
                 EncryptCookies::class,

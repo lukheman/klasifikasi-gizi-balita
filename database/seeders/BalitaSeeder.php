@@ -16,20 +16,16 @@ class BalitaSeeder extends Seeder
     {
         DB::table('balita')->insert([
             [
-                'kode_balita' => Str::random(10),
-                'nama_balita' => 'John Doe',
+                'nik' => Str::random(10),
+                'nama' => 'John Doe',
                 'tanggal_lahir' => '2022-01-01',
                 'id_orang_tua' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
-                'kode_balita' => Str::random(10),
-                'nama_balita' => 'Jane Doe',
+                'nik' => Str::random(10),
+                'nama' => 'Jane Doe',
                 'tanggal_lahir' => '2023-02-02',
                 'id_orang_tua' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             // Add more entries as needed
         ]);

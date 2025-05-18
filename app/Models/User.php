@@ -4,10 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+
+use App\Enums\Role;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -25,7 +28,10 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
         'username',
-        'role'
+        'role',
+        'id_desa',
+        'nik',
+        'alamat'
     ];
 
     /**
@@ -54,20 +60,21 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool {
 
         return match ($panel->getId()) {
-            'admin' => $this->role === 'admin',
-            'ahligizi' => $this->role === 'ahligizi',
-            'orangtua' => $this->role === 'orangtua',
-            'pimpinan' => $this->role === 'pimpinan',
+            'admin' => Role::from($this->role) === Role::Admin,
+            'ahligizi' => Role::from($this->role) === Role::AhliGizi,
+            'orangtua' => Role::from($this->role) === Role::OrangTua,
+            'pimpinan' => Role::from($this->role) === Role::Pimpinan,
             default => false,
         };
 
     }
 
-    public function orangTua() {
-        return $this->hasOne(OrangTua::class, 'id_user');
+    public function balita() {
+        return $this->hasMany(Balita::class, 'id_user');
     }
 
-    public static function getRoles() {
-        return ['ahligizi', 'orangtua', 'pimpinan', 'admin'];
+    public function desa(): HasOne {
+        return $this->hasOne(Desa::class, 'id', 'id_desa');
     }
+
 }

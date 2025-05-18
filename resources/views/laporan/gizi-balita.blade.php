@@ -68,8 +68,8 @@
 
                 <tr>
                     <th>No</th>
-                    <th>Tanggal</th>
-                    <th>Umur</th>
+                    <th>Waktu Pemeriksaan</th>
+                    <th>Umur (Bulan)</th>
                     <th>Berat (Kg)</th>
                     <th>Tinggi (Cm)</th>
                     <th>Status Gizi</th>
@@ -79,14 +79,10 @@
 
             <tbody>
 
-                @php
-                $i = 1;
-                @endphp
-
                 @foreach ($laporan_gizi as $item)
                     <tr>
-                        <td>{{ $i++}}</td>
-                        <td>{{ $item->tanggal_pemeriksaan }}</td>
+                        <td>{{ $loop->index + 1}}</td>
+                        <td>{{ $item->created_at }}</td>
                         <td>{{ $item->umur }}</td>
                         <td>{{ $item->berat }}</td>
                         <td>{{ $item->tinggi }}</td>

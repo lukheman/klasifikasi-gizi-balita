@@ -6,7 +6,6 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -18,6 +17,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+
+use App\Filament\Pages;
 
 class PimpinanPanelProvider extends PanelProvider
 {
@@ -33,7 +34,9 @@ class PimpinanPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Pimpinan/Resources'), for: 'App\\Filament\\Pimpinan\\Resources')
             ->discoverPages(in: app_path('Filament/Pimpinan/Pages'), for: 'App\\Filament\\Pimpinan\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                /* \Filament\Pages\Dashboard::class, */
+                Pages\LaporanBalita::class,
+                Pages\LaporanRiwayatPemeriksaan::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Pimpinan/Widgets'), for: 'App\\Filament\\Pimpinan\\Widgets')
             ->widgets([

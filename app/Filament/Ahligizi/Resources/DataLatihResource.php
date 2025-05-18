@@ -24,23 +24,25 @@ class DataLatihResource extends Resource
 
     protected static ?string $slug = 'data-latih';
 
+    protected static ?string $navigationGroup = 'Data';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('nama')
-                    ->label('Nama Balita') 
+                    ->label('Nama Balita')
                     ->required() ,
                 TextInput::make('umur')
-                    ->label('Umur Balita') 
+                    ->label('Umur Balita')
                     ->integer()
                     ->required() ,
                 TextInput::make('berat')
-                    ->label('Berat Balita') 
+                    ->label('Berat Balita')
                     ->numeric()
                     ->required() ,
                 TextInput::make('tinggi')
-                    ->label('Tinggi Balita') 
+                    ->label('Tinggi Balita')
                     ->numeric()
                     ->required(),
             ]);
@@ -49,6 +51,7 @@ class DataLatihResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->striped()
             ->columns([
                 TextColumn::make('nama')
                     ->searchable()
@@ -63,13 +66,13 @@ class DataLatihResource extends Resource
             ->filters([
                 //
             ])
-            ->headerActions([ 
+            ->headerActions([
                 Tables\Actions\ImportAction::make()
                     ->importer(DataLatihImporter::class)
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                Tables\Actions\EditAction::make()->button()->color('warning'),
+                Tables\Actions\DeleteAction::make()->button()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

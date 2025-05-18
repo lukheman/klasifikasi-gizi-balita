@@ -2,11 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages;
+use App\Filament\Pages\ViewGrafikKms;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -26,6 +27,11 @@ class AhligiziPanelProvider extends PanelProvider
         return $panel
             ->id('ahligizi')
             ->path('ahligizi')
+            ->resources([
+                \App\Filament\Resources\BalitaResource::class,
+                \App\Filament\Resources\OrangTuaResource::class,
+                \App\Filament\Ahligizi\Resources\RiwayatPemeriksaanResource::class,
+            ])
             ->login()
             ->profile()
             ->colors([
@@ -36,7 +42,15 @@ class AhligiziPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Ahligizi/Resources'), for: 'App\\Filament\\Ahligizi\\Resources')
             ->discoverPages(in: app_path('Filament/Ahligizi/Pages'), for: 'App\\Filament\\Ahligizi\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                /* Pages\Dashboard::class, */
+                ViewGrafikKms::class,
+                Pages\LaporanBalita::class,
+                Pages\LaporanRiwayatPemeriksaan::class
+            ])
+            ->navigationGroups([
+                'Data',
+                'Pemeriksaan Gizi',
+                'Laporan',
             ])
             ->discoverWidgets(in: app_path('Filament/Ahligizi/Widgets'), for: 'App\\Filament\\Ahligizi\\Widgets')
             ->widgets([

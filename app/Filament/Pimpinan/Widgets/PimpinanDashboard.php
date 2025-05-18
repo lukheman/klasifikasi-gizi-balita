@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pimpinan\Widgets;
 
-use App\Models\LaporanGizi;
+use App\Models\RiwayatPemeriksaan;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use App\Models\Balita;
@@ -16,7 +16,7 @@ class PimpinanDashboard extends BaseWidget
                 ->description('Jumlah seluruh balita')
                 ->color('success')
                 ->icon('heroicon-o-user-group'),
-            Stat::make('Total Pemeriksaan', LaporanGizi::query()->count())
+            Stat::make('Total Pemeriksaan', RiwayatPemeriksaan::query()->count())
                 ->description('Jumlah kesulurahan pemeriksaan yang telah dilakukan')
                 ->color('success')
                 ->icon('heroicon-o-check')

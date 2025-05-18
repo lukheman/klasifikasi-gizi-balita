@@ -3,24 +3,26 @@
 namespace App\Filament\Ahligizi\Pages;
 
 use App\Livewire\GrafikKMS\GrafikTinggiBadan;
-use App\Models\Balita;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-
 use Filament\Actions\Action;
-
 use App\Filament\Helpers\CekGiziHelper;
 use App\Livewire\GrafikKMS\GrafikBeratBadan;
-
-use App\Models\LaporanGizi;
-
+use App\Models\RiwayatPemeriksaan;
 use Carbon\Carbon;
 use Filament\Support\View\Components\Modal;
+
+use App\Models\Balita;
+use App\Models\User;
+
+use App\Enums\Role;
 
 class CekGizi extends Page
 {
@@ -31,6 +33,8 @@ class CekGizi extends Page
 
     protected static ?int $navigationSort = 10;
 
+    protected static ?string $navigationGroup = 'Pemeriksaan Gizi';
+
     public ?array $data = [];
 
     public ?string $status = null;
@@ -38,6 +42,9 @@ class CekGizi extends Page
     public ?int $umur = null;
     public ?float $berat = null;
     public ?float $tinggi = null;
+
+    public ?string $nik = null;
+    public ?string $nama = null;
 
 
     public function mount(): void {
@@ -47,28 +54,80 @@ class CekGizi extends Page
     public function form(Form $form): Form {
         return $form
             ->schema([
-                Select::make('id_balita')
-                    ->label('Nama Balita')
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->options(Balita::all()->mapWithKeys(fn($o) => [$o->id => "{$o->kode_balita} - {$o->nama_balita}"]))
+                TextInput::make('nik_orang_tua')
+                    ->label('NIK Orang Tua')
                     ->reactive()
-   ->afterStateUpdated(function ($state, callable $set) {
-                $tanggalLahir = Balita::where('id', $state)->value('tanggal_lahir');
-
-                if ($tanggalLahir) {
-                    $umur = ceil(Carbon::parse($tanggalLahir)->diffInMonths(Carbon::now()));
-                    $set('umur', $umur);
-                } else {
-                    $set('umur', null);
-                }
-            }),
-                DatePicker::make('tanggal_pemeriksaan')
                     ->required()
-                    ->label('Tanggal Pemeriksaan')
-                    ->default(now())
-                    ->maxDate(now()),
+                    ->rules('exists:users,nik')
+                    ->validationMessages([
+                        'exists' => 'NIK tidak terdaftar'
+                    ])
+                    ->afterStateUpdated(function(Set $set, ?string $state) {
+                        $orang_tua = User::query()
+                            ->where('nik', $state)
+                            ->where('role', Role::OrangTua)
+                            ->first();
+
+                        if($orang_tua) {
+                            if($orang_tua->id_desa !== auth()->user()->id_desa) {
+
+                                Notification::make()
+                                    ->title('NIK orang tua tidak terdaftar di desa' . auth()->user()->desa->naam)
+                                    ->warning()
+                                    ->send();
+
+                                $set('nama_orang_tua', null);
+                                return;
+
+                            }
+
+                            $set('nama_orang_tua', $orang_tua ? $orang_tua->name : null);
+
+                        } else {
+
+                            $set('nama_orang_tua', null);
+                        }
+                    }),
+                TextInput::make('nama_orang_tua')
+                    ->label('Nama Orang Tua'),
+                Hidden::make('id_balita'),
+                TextInput::make('nik')
+                    ->label('NIK Balita')
+                    ->reactive()
+                    ->afterStateUpdated(function(Set $set, ?string $state) {
+                        $balita = Balita::where('nik', $state)->first();
+
+                        if($balita) {
+                            if($balita->id_desa !== auth()->user()->id_desa) {
+
+                                Notification::make()
+                                    ->title('NIK balita tidak terdaftar di desa' . auth()->user()->desa->naam)
+                                    ->warning()
+                                    ->send();
+
+                                $set('nama', null);
+                                return;
+
+                            }
+
+                            $set('nama', $balita ? $balita->nama : null);
+                            $set('id_balita', $balita ? $balita->id : null);
+                            $umur = Carbon::parse($balita->tanggal_lahir)->diffInMonths(now());
+                            $set('umur', ceil($umur));
+                        } else {
+                            Notification::make()
+                                ->title('NIK tidak terdaftar')
+                                ->warning()
+                                ->send();
+
+                            $set('nama', null);
+                            return;
+                        }
+
+                    })
+                ,
+                TextInput::make('nama')
+                    ->label('Nama Balita'),
                 TextInput::make('umur')
                     ->required()
                     ->label('Umur (Bulan)')
@@ -93,11 +152,12 @@ class CekGizi extends Page
         $this->umur = $data['umur'];
         $this->berat = $data['berat'];
         $this->tinggi = $data['tinggi'];
+        $this->nama = $data['nama'];
+        $this->nik = $data['nik'];
 
         // simpan ke laporan
-        LaporanGizi::create([
+        RiwayatPemeriksaan::create([
             'id_balita' => $data['id_balita'],
-            'tanggal_pemeriksaan' => $data['tanggal_pemeriksaan'],
             'umur' => $data['umur'],
             'berat' => $data['berat'],
             'tinggi' => $data['tinggi'],
