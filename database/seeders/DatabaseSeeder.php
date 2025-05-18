@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DesaSeeder::class,
             UserSeeder::class,
-            OrangTuaSeeder::class,
-            BalitaSeeder::class,
+            /* OrangTuaSeeder::class, */
+            /* BalitaSeeder::class, */
             DataLatihSeeder::class,
             StandarBeratWhoSeeder::class,
             StandarTinggiWhoSeeder::class
