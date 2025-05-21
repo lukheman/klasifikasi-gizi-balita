@@ -31,7 +31,7 @@ class OrangTuaPanelProvider extends PanelProvider
             ->profile()
             ->login()
             ->spa()
-            ->registration(Register::class)
+            /* ->registration(Register::class) */
             ->colors([
                 'primary' => Color::Amber,
             ])

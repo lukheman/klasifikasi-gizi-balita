@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laporan Penjualan Barang</title>
+    <title>Laporan Data Balita</title>
 
 
     <!-- Google Font: Source Sans Pro -->
