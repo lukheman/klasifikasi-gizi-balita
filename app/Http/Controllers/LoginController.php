@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
+use App\Enums\Role;
+
 class LoginController extends Controller
 {
     public function showLoginForm()
@@ -23,10 +25,11 @@ class LoginController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
 
-            return match ($user->role) {
-                'admin' => redirect()->route('filament.admin.pages.dashboard'),
-                'ahligizi' => redirect()->route('filament.ahligizi.pages.dashboard'),
-                'orangtua' => redirect()->route('filament.orangtua.pages.dashboard'),
+            return match (Role::from($user->role)) {
+                Role::Admin => redirect()->route('filament.admin.pages.dashboard'),
+                Role::AhliGizi => redirect()->route('filament.ahligizi.pages.dashboard'),
+                Role::OrangTua => redirect()->route('filament.orangtua.pages.dashboard'),
+                Role::Pimpinan => redirect()->route('filament.pimpinan.pages.dashboard'),
                 default => redirect('/home'),
             };
         }
