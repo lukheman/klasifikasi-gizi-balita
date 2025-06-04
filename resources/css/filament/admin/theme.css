@@ -1,0 +1,56 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+.fi-sidebar {
+    @apply bg-zinc-800 dark:bg-zinc-900 !important;
+}
+
+.fi-topbar nav, .fi-sidebar-header {
+    @apply bg-green-500 dark:bg-zinc-900 shadow-md !important;
+}
+
+.fi-logo {
+    @apply text-white;
+}
+
+.fi-sidebar-item-label {
+    @apply text-white;
+}
+
+
+.fi-sidebar-item-active .fi-sidebar-item-icon,
+.fi-sidebar-item-active .fi-sidebar-item-label {
+    @apply text-primary-500 dark:text-primary-400 !important;
+}
+
+
+.fi-sidebar-item:hover .fi-sidebar-item-icon,
+.fi-sidebar-item:hover .fi-sidebar-item-label {
+    @apply text-primary-600 dark:text-primary-300 !important;
+}
+
+/* widgets */
+.fi-wi-stats-overview .fi-wi-stats-overview-stat:nth-child(1) {
+    @apply bg-blue-600 dark:bg-blue-900 shadow-md !important;
+}
+
+.fi-wi-stats-overview .fi-wi-stats-overview-stat:nth-child(2) {
+    @apply bg-green-600 dark:bg-green-900 shadow-md !important;
+}
+
+.fi-wi-stats-overview .fi-wi-stats-overview-stat:nth-child(3) {
+    @apply bg-yellow-500 dark:bg-red-900 shadow-md !important;
+}
+
+/* stats overviw label */
+
+.fi-wi-stats-overview-stat-label,
+.fi-wi-stats-overview-stat-icon,
+.fi-wi-stats-overview-stat-description {
+    @apply text-gray-100 dark:text-gray-100;
+}
+
+.fi-wi-stats-overview-stat-value {
+    @apply text-gray-100;
+}
