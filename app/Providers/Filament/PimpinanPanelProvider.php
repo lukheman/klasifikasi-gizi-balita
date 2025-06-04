@@ -28,9 +28,11 @@ class PimpinanPanelProvider extends PanelProvider
             ->id('pimpinan')
             ->path('pimpinan')
             ->login()
+            ->profile()
             ->colors([
                 'primary' => Color::Green,
             ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Pimpinan/Resources'), for: 'App\\Filament\\Pimpinan\\Resources')
             ->discoverPages(in: app_path('Filament/Pimpinan/Pages'), for: 'App\\Filament\\Pimpinan\\Pages')
             ->pages([

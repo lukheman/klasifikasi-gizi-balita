@@ -40,7 +40,7 @@ class OrangTuaPanelProvider extends PanelProvider
             ->pages([
                 Pages\LaporanRiwayatPemeriksaan::class
             ])
-
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->resources([
                 \App\Filament\Ahligizi\Resources\RiwayatPemeriksaanResource::class
             ])

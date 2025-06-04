@@ -10,6 +10,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
 use App\Filament\Ahligizi\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -39,6 +40,7 @@ class AhligiziPanelProvider extends PanelProvider
             ])
             // ->databaseNotifications()
             ->spa()
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Ahligizi/Resources'), for: 'App\\Filament\\Ahligizi\\Resources')
             ->discoverPages(in: app_path('Filament/Ahligizi/Pages'), for: 'App\\Filament\\Ahligizi\\Pages')
             ->pages([
