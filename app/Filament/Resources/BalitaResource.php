@@ -71,22 +71,6 @@ class BalitaResource extends Resource
                             ->first();
 
                         if($orang_tua) {
-
-                            if($orang_tua->id_desa !== auth()->user()->id_desa) {
-
-                                Notification::make()
-                                    ->title("NIK orang tua tidak terdaftar di desa ini")
-                                    ->warning()
-                                    ->send();
-
-                                $set('nama_orang_tua', null);
-                                $set('id_orang_tua', null);
-                                $set('id_desa', null);
-
-                                return;
-
-                            }
-
                             $set('nama_orang_tua', $orang_tua ? $orang_tua->name : null);
                             $set('id_orang_tua', $orang_tua->id);
                             $set('id_desa', $orang_tua->desa->id);
@@ -168,8 +152,8 @@ class BalitaResource extends Resource
     {
         return [
             'index' => Pages\ListBalitas::route('/'),
-            'create' => Pages\CreateBalita::route('/create'),
-            'edit' => Pages\EditBalita::route('/{record}/edit'),
+            /* 'create' => Pages\CreateBalita::route('/create'), */
+            /* 'edit' => Pages\EditBalita::route('/{record}/edit'), */
             /* 'view' => Pages\ViewBalita::route('/{record}') */
         ];
     }

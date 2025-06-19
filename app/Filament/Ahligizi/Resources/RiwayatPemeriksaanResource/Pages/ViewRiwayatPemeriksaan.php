@@ -10,6 +10,10 @@ class ViewRiwayatPemeriksaan extends ViewRecord
 {
     protected static string $resource = RiwayatPemeriksaanResource::class;
 
-    public static ?string $title = 'Lihat Riwayat Pemeriksaan';
+
+    public function getTitle(): string
+    {
+        return 'Riwayat Pemeriksaan Balita: ' . $this->record->nama;
+    }
 
 }

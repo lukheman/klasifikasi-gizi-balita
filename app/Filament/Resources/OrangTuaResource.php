@@ -49,6 +49,7 @@ class OrangTuaResource extends Resource
                     ->rules(function($record) {
                         return [
                             Rule::unique('users', 'nik')->ignore($record?->id),
+                            'unique:balita,nik',
                             'numeric',
                         ];
                     })
@@ -139,8 +140,8 @@ class OrangTuaResource extends Resource
     {
         return [
             'index' => Pages\ListOrangTuas::route('/'),
-            'create' => Pages\CreateOrangTua::route('/create'),
-            'edit' => Pages\EditOrangTua::route('/{record}/edit'),
+            /* 'create' => Pages\CreateOrangTua::route('/create'), */
+            /* 'edit' => Pages\EditOrangTua::route('/{record}/edit'), */
         ];
     }
 }

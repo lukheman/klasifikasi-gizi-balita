@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->integer('umur'); // umur dalam satuan bulan
-            $table->decimal('berat', 4, 2);
-            $table->decimal('tinggi', 4, 2);
+            $table->decimal('berat', 5, 2);
+            $table->decimal('tinggi', 5, 2);
             $table->enum('status', ['stunting', 'underweight', 'normal', 'wasting', 'overweight']);
             $table->timestamps();
 

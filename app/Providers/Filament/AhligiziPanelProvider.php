@@ -39,7 +39,7 @@ class AhligiziPanelProvider extends PanelProvider
                 'primary' => Color::Green,
             ])
             // ->databaseNotifications()
-            ->spa()
+            /* ->spa() */
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Ahligizi/Resources'), for: 'App\\Filament\\Ahligizi\\Resources')
             ->discoverPages(in: app_path('Filament/Ahligizi/Pages'), for: 'App\\Filament\\Ahligizi\\Pages')
@@ -58,7 +58,6 @@ class AhligiziPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AhliGiziDashboard::class
             ])
-            ->spa()
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

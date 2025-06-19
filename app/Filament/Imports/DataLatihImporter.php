@@ -6,6 +6,7 @@ use App\Models\DataLatih;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use App\Enums\StatusGizi;
 
 class DataLatihImporter extends Importer
 {
@@ -34,7 +35,7 @@ class DataLatihImporter extends Importer
                 ->rules(['required', 'numeric']),
             ImportColumn::make('status')
                 ->requiredMapping()
-                ->rules(['required', 'in:stunting,underweight,normal,wasting,overweight']),
+                ->rules(['required', 'in:' . implode(',', array_map('strtolower', StatusGizi::values()))]),
         ];
     }
 

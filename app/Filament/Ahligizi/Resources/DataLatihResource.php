@@ -76,6 +76,8 @@ class DataLatihResource extends Resource
                 Tables\Actions\EditAction::make()->button()->color('warning'),
                 Tables\Actions\DeleteAction::make()->button()
             ])
+            ->paginated([10, 20, 50, 100, 150, 200]) // Enable pagination with options
+            ->defaultPaginationPageOption(20) // Set default records per page
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -94,8 +96,8 @@ class DataLatihResource extends Resource
     {
         return [
             'index' => Pages\ListDataLatihs::route('/'),
-            'create' => Pages\CreateDataLatih::route('/create'),
-            'edit' => Pages\EditDataLatih::route('/{record}/edit'),
+            /* 'create' => Pages\CreateDataLatih::route('/create'), */
+            /* 'edit' => Pages\EditDataLatih::route('/{record}/edit'), */
         ];
     }
 }

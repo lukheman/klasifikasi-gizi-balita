@@ -33,7 +33,7 @@ class OrangTuaPanelProvider extends PanelProvider
             ->spa()
             /* ->registration(Register::class) */
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Green,
             ])
             ->discoverResources(in: app_path('Filament/OrangTua/Resources'), for: 'App\\Filament\\OrangTua\\Resources')
             ->discoverPages(in: app_path('Filament/OrangTua/Pages'), for: 'App\\Filament\\OrangTua\\Pages')

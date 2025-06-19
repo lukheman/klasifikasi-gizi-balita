@@ -38,6 +38,7 @@ class RiwayatPemeriksaanRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('status_gizi')
             ->striped()
+            ->defaultSort('umur')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Waktu Pemeriksaan')
@@ -62,6 +63,7 @@ class RiwayatPemeriksaanRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->button()
+                    ->label('Lihat Grafik KMS')
                     ->url(fn($record): string => ViewGrafikKms::getUrl(['record' => $record]))
                     ->color( Color::Blue )
             ])

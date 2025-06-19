@@ -35,6 +35,8 @@ class CekGizi extends Page
 
     protected static ?string $navigationGroup = 'Pemeriksaan Gizi';
 
+    protected static ?string $navigationLabel = 'Cek Gizi Balita';
+
     public ?array $data = [];
 
     public ?string $status = null;
@@ -131,7 +133,6 @@ class CekGizi extends Page
                 TextInput::make('umur')
                     ->required()
                     ->label('Umur (Bulan)')
-                    ->readonly()
                     ->integer(),
                 TextInput::make('berat')
                     ->required()

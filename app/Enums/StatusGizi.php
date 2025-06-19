@@ -15,10 +15,10 @@ enum StatusGizi: string implements HasLabel {
         return $this->value;
     }
 
-    public function getColor(): string {
+    public function getColor() {
         return match($this) {
             Self::Stunting => 'danger',
-            Self::Underweight => 'zinc',
+            Self::Underweight => 'danger',
             Self::Normal => 'primary',
             Self::Wasting => 'warning',
             Self::Overweight => 'danger',
@@ -26,6 +26,36 @@ enum StatusGizi: string implements HasLabel {
         };
     }
 
+
+    /**
+     * Mengembalikan array asosiatif dari enum case value sebagai key dan value.
+     *
+     * Contoh output:
+     * [
+     *     'Stunting' => 'Stunting',
+     *     'Underweight' => 'Underweight',
+     * ]
+     *
+     * @return array
+     */
+    public static function labels(): array {
+        return array_combine(
+            array_map(fn($case) => $case->value, self::cases()),
+            array_map(fn($case) => $case->value, self::cases())
+        );
+    }
+
+    /**
+     * Mengembalikan array dari semua nilai enum.
+     *
+     * Contoh output:
+     * [
+     *     'Stunting',
+     *     'Underweight',
+     * ]
+     *
+     * @return array
+     */
     public static function values(): array {
         return array_map(fn($case) => $case->value, self::cases());
     }

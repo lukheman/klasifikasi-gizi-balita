@@ -25,7 +25,7 @@ class RiwayatPemeriksaanResource extends Resource
 
     protected static ?string $navigationIcon = 'fas-heartbeat';
 
-    protected static ?string $navigationLabel = 'Riwayat Pemeriksaan';
+    protected static ?string $navigationLabel = 'Riwayat Pemeriksaan Balita';
 
     protected static ?string $pluralModelLabel = 'Riwayat Pemeriksaan';
 
@@ -70,7 +70,14 @@ class RiwayatPemeriksaanResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->button()->color(Color::Blue)->label('Daftar Riwayat'),
+                Tables\Actions\Action::make('cetak_laporan_gizi_balita')
+                    ->label('Cetak Riwayat')
+                    ->icon('heroicon-o-printer')
+                    ->color(Color::Red)
+                    ->url(fn($record) => route('laporan.gizi-balita', ['id_balita' => $record->id]))
+                    ->openUrlInNewTab()
+                    ->button(),
+                Tables\Actions\ViewAction::make()->button()->color(Color::Blue)->label('Riwayat'),
             ])
             ->headerActions([
             ])

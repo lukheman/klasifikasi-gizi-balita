@@ -64,6 +64,15 @@ role    : orangtua
 # ahligizi
 
 
+# Revisi 17 Juni 2025
+
+- Ubah Ahligizi jadi Kader
+- Ubah adamin jadi ahligizi
+- Error di orang tua
+- buat grafik riwayat pemeriksaan
+- gunakan data tinggi badan menurut who
+
+
 
 
 

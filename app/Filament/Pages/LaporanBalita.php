@@ -24,6 +24,8 @@ class LaporanBalita extends Page implements HasTable
 
     protected static ?string $navigationGroup = 'Laporan';
 
+    protected static ?string $navigationLabel = 'Laporan Data Balita';
+
     public static function shouldRegisterNavigation(): bool {
         return match (Role::from(auth()->user()->role)) {
             Role::Pimpinan => true,
