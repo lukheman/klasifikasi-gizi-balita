@@ -7,8 +7,8 @@ use Filament\Support\Contracts\HasLabel;
 enum Role: string implements HasLabel
 {
 
-    case Admin = 'Admin';
-    case AhliGizi = 'Ahli Gizi';
+    case Admin = 'Ahli Gizi';
+    case Kader = 'Kader';
     case Pimpinan = 'Pimpinan';
     case OrangTua = 'Orang Tua';
 
@@ -19,7 +19,7 @@ enum Role: string implements HasLabel
     public function getColor(): ?string {
         return match($this) {
             self::Admin => 'primary',
-            self::AhliGizi => 'danger',
+            self::Kader => 'danger',
             self::Pimpinan=> 'success',
             self::OrangTua=> 'warning',
             default => 'default'

@@ -29,7 +29,7 @@ class LaporanBalita extends Page implements HasTable
     public static function shouldRegisterNavigation(): bool {
         return match (Role::from(auth()->user()->role)) {
             Role::Pimpinan => true,
-            Role::AhliGizi => true,
+            Role::Kader => true,
             default => false
         };
     }

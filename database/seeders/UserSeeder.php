@@ -18,12 +18,12 @@ class UserSeeder extends Seeder
         /*     'name' => 'Sofhia', */
         /*     'email' => 'ahligizi@gmail.com', */
         /*     'password' => bcrypt('password123'), */
-        /*     'role' => Role::AhliGizi */
+        /*     'role' => Role::Kader */
         /* ]); */
 
         User::create([
             'name' => 'Akmal',
-            'email' => 'admin@gmail.com',
+            'email' => 'ahligizi@gmail.com',
             'password' => bcrypt('password123'),
             'role' => Role::Admin
         ]);

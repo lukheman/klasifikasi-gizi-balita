@@ -35,7 +35,7 @@ class LaporanRiwayatPemeriksaan extends Page implements HasTable
     {
         return match (Role::from(auth()->user()->role)) {
             Role::Pimpinan => true,
-            Role::AhliGizi => true,
+            Role::Kader => true,
             Role::OrangTua => true,
             default => false
         };
@@ -45,7 +45,7 @@ class LaporanRiwayatPemeriksaan extends Page implements HasTable
     {
         return $table
             ->query(function () {
-                if (Role::from(auth()->user()->role) === Role::AhliGizi) {
+                if (Role::from(auth()->user()->role) === Role::Kader) {
                     return RiwayatPemeriksaan::query()
                         ->with(['balita.desa'])
                         ->whereHas('balita.desa', function ($query) {

@@ -2,15 +2,17 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages;
+use App\Filament\Pages\ViewGrafikKms;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
-use App\Filament\Widgets;
+use App\Filament\Kader\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -18,35 +20,43 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+
+class KaderPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('ahligizi')
-            ->path('ahligizi')
-            ->spa()
+            ->id('kader')
+            ->path('kader')
+            ->resources([
+                \App\Filament\Resources\BalitaResource::class,
+                \App\Filament\Resources\OrangTuaResource::class,
+                \App\Filament\Kader\Resources\RiwayatPemeriksaanResource::class,
+            ])
             ->login()
             ->profile()
             ->colors([
                 'primary' => Color::Green,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            // ->databaseNotifications()
+            /* ->spa() */
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->discoverResources(in: app_path('Filament/Kader/Resources'), for: 'App\\Filament\\Kader\\Resources')
+            ->discoverPages(in: app_path('Filament/Kader/Pages'), for: 'App\\Filament\\Kader\\Pages')
             ->pages([
                 /* Pages\Dashboard::class, */
-            ])
-            ->viteTheme('resources/css/filament/admin/theme.css')
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-                Widgets\AdminDashboard::class,
-                // Widgets\FilamentInfoWidget::class,
+                ViewGrafikKms::class,
+                Pages\LaporanBalita::class,
+                Pages\LaporanRiwayatPemeriksaan::class
             ])
             ->navigationGroups([
                 'Data',
                 'Pemeriksaan Gizi',
                 'Laporan',
+            ])
+            ->discoverWidgets(in: app_path('Filament/Kader/Widgets'), for: 'App\\Filament\\Kader\\Widgets')
+            ->widgets([
+                Widgets\KaderDashboard::class
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -63,5 +73,4 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ]);
     }
-
 }

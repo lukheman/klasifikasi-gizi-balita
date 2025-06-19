@@ -109,7 +109,7 @@ class BalitaResource extends Resource
     {
         return $table
             ->query(function() {
-                if(Role::from(auth()->user()->role) === Role::AhliGizi) {
+                if(Role::from(auth()->user()->role) === Role::Kader) {
                     return Balita::query()->latest()->where('id_desa', auth()->user()->id_desa);
                 }
 

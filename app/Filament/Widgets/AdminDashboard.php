@@ -21,7 +21,7 @@ class AdminDashboard extends BaseWidget
                 ->color('success')
                 ->icon('heroicon-o-user')
                 ->description('Jumlah Akun Orang Tua'),
-            Stat::make('Ahli Gizi', User::where('role', Role::AhliGizi)->count())
+            Stat::make('Ahli Gizi', User::where('role', Role::Kader)->count())
                 ->color('success')
                 ->icon('heroicon-o-user')
                 ->description('Jumlah Akun Ahli Gizi')

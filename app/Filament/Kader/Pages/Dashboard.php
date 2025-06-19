@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filament\Pimpinan\Pages;
+namespace App\Filament\Kader\Pages;
 
-use App\Filament\Pimpinan\Widgets\PimpinanDashboard;
+use App\Filament\Kader\Widgets\KaderDashboard;
 use Filament\Pages\Page;
 
 class Dashboard extends \Filament\Pages\Dashboard
 {
+
     protected static ?string $navigationIcon = 'fas-home';
 
     protected static string $view = 'filament.kader.pages.dashboard';
@@ -16,7 +17,8 @@ class Dashboard extends \Filament\Pages\Dashboard
 
     protected function getHeaderWidgets(): array {
 
-        return [ PimpinanDashboard::class];
+        return [ KaderDashboard::class];
 
     }
+
 }

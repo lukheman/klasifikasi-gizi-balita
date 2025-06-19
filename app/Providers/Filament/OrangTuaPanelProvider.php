@@ -42,7 +42,7 @@ class OrangTuaPanelProvider extends PanelProvider
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->resources([
-                \App\Filament\Ahligizi\Resources\RiwayatPemeriksaanResource::class
+                \App\Filament\Kader\Resources\RiwayatPemeriksaanResource::class
             ])
             ->discoverWidgets(in: app_path('Filament/OrangTua/Widgets'), for: 'App\\Filament\\OrangTua\\Widgets')
             ->widgets([

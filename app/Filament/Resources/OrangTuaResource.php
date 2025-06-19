@@ -60,7 +60,7 @@ class OrangTuaResource extends Resource
                     ->label('NIK'),
                 Hidden::make('id_desa')
                     ->default(auth()->user()->id_desa)
-                    ->disabled(Role::from(auth()->user()->role) !== Role::AhliGizi)
+                    ->disabled(Role::from(auth()->user()->role) !== Role::Kader)
                 ,
                 TextInput::make('email')
                     ->label('Email')
@@ -79,8 +79,8 @@ class OrangTuaResource extends Resource
                     ->label('Nama Desa')
                     ->required()
                     ->options(Desa::all()->pluck('nama', 'id'))
-                    ->hidden(Role::from(auth()->user()->role) === Role::AhliGizi)
-                    ->disabled(Role::from(auth()->user()->role) === Role::AhliGizi),
+                    ->hidden(Role::from(auth()->user()->role) === Role::Kader)
+                    ->disabled(Role::from(auth()->user()->role) === Role::Kader),
                 Textarea::make('alamat'),
                 Hidden::make('role')->default(Role::OrangTua)
             ]);
@@ -90,7 +90,7 @@ class OrangTuaResource extends Resource
     {
         return $table
             ->query(function() {
-                if (Role::from(auth()->user()->role) === Role::AhliGizi) {
+                if (Role::from(auth()->user()->role) === Role::Kader) {
 
                     return User::query()->latest()->where('role', Role::OrangTua)->where('id_desa', auth()->user()->id_desa);
                 }
