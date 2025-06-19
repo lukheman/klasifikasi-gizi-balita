@@ -26,7 +26,7 @@ class LoginController extends Controller
             $user = Auth::user();
 
             return match (Role::from($user->role)) {
-                Role::Admin => redirect()->route('filament.admin.pages.dashboard'),
+                Role::Admin => redirect()->route('filament.ahligizi.pages.dashboard'),
                 Role::Kader => redirect()->route('filament.kader.pages.dashboard'),
                 Role::OrangTua => redirect()->route('filament.orangtua.pages.dashboard'),
                 Role::Pimpinan => redirect()->route('filament.pimpinan.pages.dashboard'),
