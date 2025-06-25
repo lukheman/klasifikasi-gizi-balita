@@ -87,7 +87,7 @@
                         <td>{{ $item->nama }}</td>
                         <td>{{ $item->orangTua->nik }}</td>
                         <td>{{ $item->orangTua->name }}</td>
-                        <td>{{ $item->desa->nama }}</td>
+                        <td>{{ $item->desa->nama ?? 'Tidak diketahuai' }}</td>
                     </tr>
                 @endforeach
 
