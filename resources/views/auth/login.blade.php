@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Puskesmas Wundulako - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -41,11 +41,18 @@
         .alert {
             border-radius: 10px;
         }
+        .gradient-text {
+            background: linear-gradient(90deg, #6e8efb, #a777e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
     </style>
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4" style="width: 400px;">
-        <h3 class="text-center mb-4 fw-bold">Login</h3>
+        <h3 class="text-center mb-4 fw-bold gradient-text">Puskesmas Wundulako - Login</h3>
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ $errors->first() }}
