@@ -74,7 +74,7 @@ class CekGizi extends Page
                             if($orang_tua->id_desa !== auth()->user()->id_desa) {
 
                                 Notification::make()
-                                    ->title('NIK orang tua tidak terdaftar di desa' . auth()->user()->desa->naam)
+                                    ->title('NIK orang tua tidak terdaftar di desa' . auth()->user()->desa->nama)
                                     ->warning()
                                     ->send();
 
@@ -103,7 +103,7 @@ class CekGizi extends Page
                             if($balita->id_desa !== auth()->user()->id_desa) {
 
                                 Notification::make()
-                                    ->title('NIK balita tidak terdaftar di desa' . auth()->user()->desa->naam)
+                                    ->title('NIK balita tidak terdaftar di desa' . auth()->user()->desa->nama)
                                     ->warning()
                                     ->send();
 
