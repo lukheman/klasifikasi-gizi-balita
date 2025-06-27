@@ -59,6 +59,7 @@ class CekGizi extends Page
                 TextInput::make('nik_orang_tua')
                     ->label('NIK Orang Tua')
                     ->reactive()
+                    ->debounce(1000)
                     ->required()
                     ->rules('exists:users,nik')
                     ->validationMessages([
@@ -96,6 +97,7 @@ class CekGizi extends Page
                 TextInput::make('nik')
                     ->label('NIK Balita')
                     ->reactive()
+                    ->debounce(1000)
                     ->afterStateUpdated(function(Set $set, ?string $state) {
                         $balita = Balita::where('nik', $state)->first();
 
