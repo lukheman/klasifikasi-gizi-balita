@@ -50,12 +50,19 @@ class RiwayatPemeriksaanResource extends Resource
     {
         return $table
             ->query(function() {
-                if(Role::from(auth()->user()->role) === Role::Kader) {
-                    return Balita::query()->latest()->where('id_desa', auth()->user()->id_desa);
-                } else if(Role::from(auth()->user()->role) === Role::OrangTua) {
-                    return Balita::query()->latest()->where('id_desa', auth()->user()->id_desa)->where('id_orang_tua', auth()->user()->id);
+                if (auth()->guard('web')->check()) {
+                    $user = auth()->guard('web')->user();
+                    if (Role::from($user->role) === Role::Kader) {
+                        return Balita::query()->latest()->where('id_desa', $user->id_desa);
+                    }
+                } elseif (auth()->guard('orang_tua')->check()) {
+                    $orangTua = auth()->guard('orang_tua')->user();
+                    return Balita::query()->latest()
+                        ->where('id_desa', $orangTua->id_desa)
+                        ->where('id_orang_tua', $orangTua->id);
                 }
-                return Balita::query()->latest();
+
+                return Balita::query()->latest(); // Fallback
             })
             ->striped()
             ->columns([

@@ -28,7 +28,7 @@ class LaporanController extends Controller
 
         if (Role::from(auth()->user()->role) === Role::Kader) {
 
-            $balita = Balita::query()->with(['orangTua', 'desa'])->where('id_desa', auth()->user()->id_desa)->get();
+        $balita = Balita::query()->with(['orangTua', 'desa'])->where('id_desa', auth()->user()->id_desa)->get();
 
         } else {
             $balita = Balita::query()->with(['orangTua', 'desa'])->get();
@@ -42,11 +42,23 @@ class LaporanController extends Controller
 
     public function riwayatPemeriksaan(Request $request) {
 
-$query = RiwayatPemeriksaan::query()
+        if(auth()->guard('web')->check()) {
+        $query = RiwayatPemeriksaan::query()
         ->with('balita') // Load relasi balita
         ->when($request->status_gizi, fn ($q) => $q->whereIn('status_gizi', (array) $request->status_gizi))
         ->when($request->dari, fn ($q) => $q->where('created_at', '>=', $request->dari))
         ->when($request->sampai, fn ($q) => $q->where('created_at', '<=', $request->sampai));
+
+        } elseif(auth()->guard('orang_tua')->check()) {
+$query = RiwayatPemeriksaan::query()
+    ->with('balita')
+    ->when(auth()->guard('orang_tua')->check(), fn ($q) => $q->whereHas('balita', fn ($subQuery) => $subQuery->where('id_orang_tua', auth()->guard('orang_tua')->user()->id)))
+    ->when($request->status_gizi, fn ($q) => $q->whereIn('status_gizi', (array) $request->status_gizi))
+    ->when($request->dari, fn ($q) => $q->where('created_at', '>=', $request->dari))
+    ->when($request->sampai, fn ($q) => $q->where('created_at', '<=', $request->sampai));
+
+        }
+
         $data = $query->get();
         return view('laporan.riwayat-pemeriksaan', [
             'data' => $data,

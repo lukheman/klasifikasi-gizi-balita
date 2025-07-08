@@ -33,33 +33,48 @@ class LaporanRiwayatPemeriksaan extends Page implements HasTable
 
     public static function shouldRegisterNavigation(): bool
     {
-        return match (Role::from(auth()->user()->role)) {
-            Role::Pimpinan => true,
-            Role::Kader => true,
-            Role::Admin => true,
-            default => false
-        };
+        // Cek guard yang aktif
+        if (auth()->guard('web')->check()) {
+            $user = auth()->guard('web')->user();
+            return match (Role::from($user->role)) {
+                Role::Pimpinan => true,
+                Role::Kader => true,
+                Role::Admin => true,
+                default => false, // Default false untuk user tanpa role valid
+            };
+        }
+
+        // Untuk guard orang_tua
+        if (auth()->guard('orang_tua')->check()) {
+            return true; // Atau sesuaikan dengan logika spesifik untuk orang_tua
+        }
+
+        return false;
     }
 
     protected function table(Table $table): Table
     {
         return $table
             ->query(function () {
-                if (Role::from(auth()->user()->role) === Role::Kader) {
+                if (auth()->guard('web')->check()) {
+                    $user = auth()->guard('web')->user();
+                    if (Role::from($user->role) === Role::Kader) {
+                        return RiwayatPemeriksaan::query()
+                            ->with(['balita.desa'])
+                            ->whereHas('balita.desa', function ($query) use ($user) {
+                                $query->where('id', $user->id_desa);
+                            })->latest();
+                    }
+                } elseif (auth()->guard('orang_tua')->check()) {
+                    $orangTua = auth()->guard('orang_tua')->user();
                     return RiwayatPemeriksaan::query()
-                        ->with(['balita.desa'])
-                        ->whereHas('balita.desa', function ($query) {
-                            $query->where('id', auth()->user()->id_desa);
+                        ->whereHas('balita', function ($query) use ($orangTua) {
+                            $query->where('id_desa', $orangTua->id_desa)
+                                ->where('id_orang_tua', $orangTua->id);
                         })->latest();
                 }
-                // elseif (Role::from(auth()->user()->role) === Role::OrangTua) {
-                //     return RiwayatPemeriksaan::query()
-                //         ->whereHas('balita', function ($query) {
-                //             $query->where('id_desa', auth()->user()->id_desa)
-                //                   ->where('id_orang_tua', auth()->user()->id);
-                //         })->latest();
-                // }
-                return RiwayatPemeriksaan::query()->latest();
+
+                return RiwayatPemeriksaan::query()->latest(); // Fallback jika tidak ada guard aktif
             })
             ->striped()
             ->columns([
