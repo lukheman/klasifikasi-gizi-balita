@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'orang_tua' => [
+            'driver' => 'session',
+            'provider' => 'orang_tua',
+        ],
     ],
 
     /*
@@ -63,6 +67,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'orang_tua' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\OrangTua::class),
         ],
 
         // 'users' => [

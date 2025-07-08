@@ -30,6 +30,7 @@ class OrangTuaPanelProvider extends PanelProvider
             ->path('orangtua')
             ->profile()
             ->login()
+            ->authGuard('orang_tua')
             ->spa()
             /* ->registration(Register::class) */
             ->colors([
