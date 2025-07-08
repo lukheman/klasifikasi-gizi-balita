@@ -24,6 +24,7 @@ use App\Models\User;
 use App\Models\OrangTua;
 
 use App\Enums\Role;
+use App\Enums\StatusGizi;
 
 class CekGizi extends Page
 {
@@ -164,7 +165,7 @@ class CekGizi extends Page
             'umur' => $data['umur'],
             'berat' => $data['berat'],
             'tinggi' => $data['tinggi'],
-            'status_gizi' => $this->status
+            'status_gizi' => $this->status ?? StatusGizi::Normal
         ]);
 
 
