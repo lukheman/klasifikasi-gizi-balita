@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laporan Data Balita</title>
 
-
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,8 +18,9 @@
         }
 
         .container {
-            width: 70%;
+            width: 80%;
             margin: 0 auto;
+            font-family: 'Source Sans Pro', sans-serif;
         }
 
         .text-center {
@@ -33,15 +33,41 @@
 
         #pesanan {
             border-collapse: collapse;
-            margin: 0 50px;
-            width: 90%;
+            width: 100%;
+            margin: 20px 0;
+            font-size: 14px;
         }
 
+        #pesanan th,
+        #pesanan td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: left;
+            vertical-align: middle;
+        }
 
-        #pesanan td,
         #pesanan th {
-            border: 1px solid black;
-            padding: 8px;
+            background-color: #f2f2f2;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333;
+        }
+
+        #pesanan td {
+            color: #444;
+        }
+
+        #pesanan tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #pesanan tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        #pesanan td:first-child {
+            text-align: center;
+            width: 50px;
         }
 
         .row {
@@ -63,9 +89,7 @@
         <h5 class="text-center"><u>Laporan Data Balita</u></h5>
 
         <table id="pesanan">
-
             <thead>
-
                 <tr>
                     <th>NO</th>
                     <th>NIK</th>
@@ -74,12 +98,8 @@
                     <th>Orang Tua</th>
                     <th>Asal Desa</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
-
                 @foreach ($balita as $item)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
@@ -87,12 +107,10 @@
                         <td>{{ $item->nama }}</td>
                         <td>{{ $item->orangTua->nik }}</td>
                         <td>{{ $item->orangTua->name }}</td>
-                        <td>{{ $item->desa->nama ?? 'Tidak diketahuai' }}</td>
+                        <td>{{ $item->desa->nama ?? 'Tidak diketahui' }}</td>
                     </tr>
                 @endforeach
-
             </tbody>
-
         </table>
 
         <div class="row">
@@ -102,7 +120,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
