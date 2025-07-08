@@ -124,7 +124,7 @@
                     const labelsWeight = whoDataWeight.map(item => parseFloat(item.bulan));
 
                     const sdLabels = ['SD-3', 'SD-2', 'SD-1', 'SD 0', 'SD +1', 'SD +2', 'SD +3'];
-                    const sdColors = ['black', 'orange', 'black', 'green', 'orange', 'black', 'black'];
+                    const sdColors = ['black', 'red', 'black', 'green', 'orange', 'black', 'black'];
                     const sdFieldsWeight = ['SD3neg', 'SD2neg', 'SD1neg', 'SD0', 'SD1', 'SD2', 'SD3'];
 
                     const datasetsWeight = [

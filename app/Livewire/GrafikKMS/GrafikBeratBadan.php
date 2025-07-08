@@ -52,7 +52,7 @@ class GrafikBeratBadan extends ChartWidget
     {
         $datasets = [];
         $labels = ['SD-3', 'SD-2', 'SD-1', 'SD 0', 'SD +1', 'SD +2', 'SD +3'];
-        $colors = ['black', 'orange', 'black', 'green', 'orange', 'black', 'black'];
+        $colors = ['black', 'red', 'black', 'green', 'orange', 'black', 'black'];
         $dataFields = ['SD3neg', 'SD2neg', 'SD1neg', 'SD0', 'SD1', 'SD2', 'SD3'];
 
         foreach ($labels as $index => $label) {
