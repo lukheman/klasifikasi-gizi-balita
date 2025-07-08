@@ -6,7 +6,7 @@ use App\Models\DataLatih;
 
 class CekGiziHelper {
 
-    private static $K = 3;
+    private static $K = 5;
 
     public static function cekStatusGizi($umur, $berat, $tinggi) {
 
