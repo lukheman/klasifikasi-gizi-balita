@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            DesaSeeder::class,
+            // DesaSeeder::class,
             UserSeeder::class,
             /* OrangTuaSeeder::class, */
             /* BalitaSeeder::class, */
-            DataLatihSeeder::class,
+            // DataLatihSeeder::class,
             StandarBeratWhoSeeder::class,
             StandarTinggiWhoSeeder::class
         ]);
