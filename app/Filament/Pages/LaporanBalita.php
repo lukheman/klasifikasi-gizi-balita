@@ -30,6 +30,7 @@ class LaporanBalita extends Page implements HasTable
         return match (Role::from(auth()->user()->role)) {
             Role::Pimpinan => true,
             Role::Kader => true,
+            Role::Admin => true,
             default => false
         };
     }

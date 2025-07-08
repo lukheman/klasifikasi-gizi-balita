@@ -37,6 +37,7 @@ class LaporanRiwayatPemeriksaan extends Page implements HasTable
             Role::Pimpinan => true,
             Role::Kader => true,
             Role::OrangTua => true,
+            Role::Admin => true,
             default => false
         };
     }
