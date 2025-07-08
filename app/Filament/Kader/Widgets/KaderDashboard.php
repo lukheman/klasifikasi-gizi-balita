@@ -4,7 +4,7 @@ namespace App\Filament\Kader\Widgets;
 
 
 use App\Models\Balita;
-use App\Models\User;
+use App\Models\OrangTua;
 use App\Models\DataLatih;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -16,7 +16,7 @@ class KaderDashboard extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Orang Tua', User::where('role', Role::OrangTua)->count())
+            Stat::make('Orang Tua', OrangTua::count())
                 ->color('success')
                 ->icon('heroicon-o-user')
                 ->description('Jumlah Akun Orang Tua'),

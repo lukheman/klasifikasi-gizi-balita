@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BalitaResource\Pages;
 use App\Filament\Resources\BalitaResource\RelationManagers;
 use App\Models\Balita;
-use App\Models\User;
+use App\Models\OrangTua;
 use App\Enums\Role;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -44,6 +44,7 @@ class BalitaResource extends Resource
                         return [
                             Rule::unique('balita', 'nik')->ignore($record?->id),
                             'numeric',
+                            'unique:orang_tua,nik',
                             'unique:users,nik'
                         ];
                     })
@@ -61,20 +62,19 @@ class BalitaResource extends Resource
                     ->reactive()
                     ->debounce(1000)
                     ->required()
-                    ->rules('exists:users,nik')
+                    ->rules('exists:orang_tua,nik')
                     ->validationMessages([
                         'exists' => 'NIK tidak terdaftar'
                     ])
                     ->afterStateUpdated(function(Set $set, ?string $state) {
-                        $orang_tua = User::query()
+                        $orang_tua = OrangTua::query()
                             ->where('nik', $state)
-                            ->where('role', Role::OrangTua)
                             ->first();
 
                         if($orang_tua) {
                             $set('nama_orang_tua', $orang_tua ? $orang_tua->name : null);
                             $set('id_orang_tua', $orang_tua->id);
-                            $set('id_desa', $orang_tua->desa->id);
+                            $set('id_desa', $orang_tua->id_desa);
 
                         } else {
                             $set('nama_orang_tua', null);
@@ -92,7 +92,7 @@ class BalitaResource extends Resource
                     ->dehydrated(false)
                     ->afterStateHydrated(function(TextInput $component, $state, $record) {
                         if($record) {
-                            $orang_tua = User::where('nik', $record->orangTua ? $record->orangTua->nik : '')->first();
+                            $orang_tua = OrangTua::where('nik', $record->orangTua ? $record->orangTua->nik : '')->first();
                             $component->state($orang_tua ? $orang_tua->name : null);
                         }
                     }) ,

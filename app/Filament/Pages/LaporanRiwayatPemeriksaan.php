@@ -36,7 +36,6 @@ class LaporanRiwayatPemeriksaan extends Page implements HasTable
         return match (Role::from(auth()->user()->role)) {
             Role::Pimpinan => true,
             Role::Kader => true,
-            Role::OrangTua => true,
             Role::Admin => true,
             default => false
         };
@@ -52,13 +51,14 @@ class LaporanRiwayatPemeriksaan extends Page implements HasTable
                         ->whereHas('balita.desa', function ($query) {
                             $query->where('id', auth()->user()->id_desa);
                         })->latest();
-                } elseif (Role::from(auth()->user()->role) === Role::OrangTua) {
-                    return RiwayatPemeriksaan::query()
-                        ->whereHas('balita', function ($query) {
-                            $query->where('id_desa', auth()->user()->id_desa)
-                                  ->where('id_orang_tua', auth()->user()->id);
-                        })->latest();
                 }
+                // elseif (Role::from(auth()->user()->role) === Role::OrangTua) {
+                //     return RiwayatPemeriksaan::query()
+                //         ->whereHas('balita', function ($query) {
+                //             $query->where('id_desa', auth()->user()->id_desa)
+                //                   ->where('id_orang_tua', auth()->user()->id);
+                //         })->latest();
+                // }
                 return RiwayatPemeriksaan::query()->latest();
             })
             ->striped()

@@ -11,7 +11,7 @@ class Balita extends Model
     protected $guarded = [];
 
     public function orangTua() {
-        return $this->belongsTo(User::class, 'id_orang_tua');
+        return $this->belongsTo(OrangTua::class, 'id_orang_tua');
     }
 
     public function riwayatPemeriksaan() {

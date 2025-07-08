@@ -62,7 +62,7 @@ class User extends Authenticatable implements FilamentUser
         return match ($panel->getId()) {
             'ahligizi' => Role::from($this->role) === Role::Admin,
             'kader' => Role::from($this->role) === Role::Kader,
-            'orangtua' => Role::from($this->role) === Role::OrangTua,
+            // 'orangtua' => Role::from($this->role) === Role::OrangTua,
             'pimpinan' => Role::from($this->role) === Role::Pimpinan,
             default => false,
         };

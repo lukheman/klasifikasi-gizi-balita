@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Balita;
 use Illuminate\Http\Request;
 use App\Models\RiwayatPemeriksaan;
+use App\Enums\Role;
 
 class LaporanController extends Controller
 {
@@ -24,7 +25,14 @@ class LaporanController extends Controller
     }
 
     public function dataBalita() {
-        $balita = Balita::query()->with(['orangTua', 'desa'])->get();
+
+        if (Role::from(auth()->user()->role) === Role::Kader) {
+
+            $balita = Balita::query()->with(['orangTua', 'desa'])->where('id_desa', auth()->user()->id_desa)->get();
+
+        } else {
+            $balita = Balita::query()->with(['orangTua', 'desa'])->get();
+        }
 
 
         return view('laporan.data-balita', [

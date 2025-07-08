@@ -21,12 +21,12 @@ use Illuminate\Validation\Rule;
 
 use App\Enums\Role;
 
-use App\Models\User;
+use App\Models\OrangTua;
 use App\Models\Desa;
 
 class OrangTuaResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = OrangTua::class;
 
     protected static ?string $navigationIcon = 'fas-users';
 
@@ -48,8 +48,9 @@ class OrangTuaResource extends Resource
                     ->required()
                     ->rules(function($record) {
                         return [
-                            Rule::unique('users', 'nik')->ignore($record?->id),
+                            Rule::unique('orang_tua', 'nik')->ignore($record?->id),
                             'unique:balita,nik',
+                            'unique:users,nik',
                             'numeric',
                         ];
                     })
@@ -66,7 +67,7 @@ class OrangTuaResource extends Resource
                     ->label('Email')
                     ->rules(function($record) {
                         return [
-                            Rule::unique('users', 'email')->ignore($record?->id),
+                            Rule::unique('orang_tua', 'email')->ignore($record?->id),
                             'email'
                         ];
                     })
@@ -82,7 +83,7 @@ class OrangTuaResource extends Resource
                     ->hidden(Role::from(auth()->user()->role) === Role::Kader)
                     ->disabled(Role::from(auth()->user()->role) === Role::Kader),
                 Textarea::make('alamat'),
-                Hidden::make('role')->default(Role::OrangTua)
+                // Hidden::make('role')->default(Role::OrangTua)
             ]);
     }
 
@@ -92,10 +93,10 @@ class OrangTuaResource extends Resource
             ->query(function() {
                 if (Role::from(auth()->user()->role) === Role::Kader) {
 
-                    return User::query()->latest()->where('role', Role::OrangTua)->where('id_desa', auth()->user()->id_desa);
+                    return OrangTua::query()->latest()->where('id_desa', auth()->user()->id_desa);
                 }
 
-                return User::query()->latest()->where('role', Role::OrangTua);
+                return OrangTua::query()->latest();
 
             })
             ->striped()

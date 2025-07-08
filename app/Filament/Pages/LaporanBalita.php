@@ -37,7 +37,14 @@ class LaporanBalita extends Page implements HasTable
 
     protected function table(Table $table): Table {
         return $table
-            ->query(Balita::query())
+            ->query(function() {
+
+                if (Role::from(auth()->user()->role) === Role::Kader) {
+                    return Balita::query()->latest()->where('id_desa', auth()->user()->id_desa);
+
+                }
+                return Balita::query();
+            })
             ->striped()
             ->columns([
                 TextColumn::make('nik')

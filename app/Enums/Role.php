@@ -10,7 +10,7 @@ enum Role: string implements HasLabel
     case Admin = 'Ahli Gizi';
     case Kader = 'Kader';
     case Pimpinan = 'Pimpinan';
-    case OrangTua = 'Orang Tua';
+    // case OrangTua = 'Orang Tua';
 
     public function getLabel(): ?string {
         return $this->value;

@@ -21,6 +21,7 @@ use Filament\Support\View\Components\Modal;
 
 use App\Models\Balita;
 use App\Models\User;
+use App\Models\OrangTua;
 
 use App\Enums\Role;
 
@@ -61,14 +62,13 @@ class CekGizi extends Page
                     ->reactive()
                     ->debounce(1000)
                     ->required()
-                    ->rules('exists:users,nik')
+                    ->rules('exists:orang_tua,nik')
                     ->validationMessages([
                         'exists' => 'NIK tidak terdaftar'
                     ])
                     ->afterStateUpdated(function(Set $set, ?string $state) {
-                        $orang_tua = User::query()
+                        $orang_tua = OrangTua::query()
                             ->where('nik', $state)
-                            ->where('role', Role::OrangTua)
                             ->first();
 
                         if($orang_tua) {

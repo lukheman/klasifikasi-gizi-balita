@@ -61,6 +61,8 @@ class UserResource extends Resource
                     ->rules(function($record) {
                         return [
                             Rule::unique('users', 'nik')->ignore($record?->id),
+                            'unique:balita,nik',
+                            'unique:orang_tua,nik',
                             'numeric',
                         ];
                     })
