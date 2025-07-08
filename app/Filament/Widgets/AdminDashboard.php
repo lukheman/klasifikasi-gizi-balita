@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\User;
+use App\Models\OrangTua;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -17,7 +18,7 @@ class AdminDashboard extends BaseWidget
                 ->color('success')
                 ->icon('heroicon-o-user')
                 ->description('Jumlah Akun Administrator'),
-            Stat::make('Orang Tua', User::where('role', Role::OrangTua)->count())
+            Stat::make('Orang Tua', OrangTua::count())
                 ->color('success')
                 ->icon('heroicon-o-user')
                 ->description('Jumlah Akun Orang Tua'),
